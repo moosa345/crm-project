@@ -10,8 +10,7 @@ import Profile from './Profile';
 import Notification from './Notification';
 import MobileSection from './MobileSection';
 
-// project import
-import { GithubOutlined } from '@ant-design/icons';
+
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
