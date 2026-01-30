@@ -19,14 +19,22 @@ import {
   Chip
 } from '@mui/material';
 
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// Icons
 import AddIcon from '@mui/icons-material/Add';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+// Avatars
+const avatar1 = "/assets/images/users/avatar_1.png";
+const avatar2 = "/assets/images/users/avatar_2.png";
+const avatar3 = "/assets/images/users/avatar_3.png";
+
 // ==============================|| INITIAL DATA ||============================== //
 
 const initialEmployees = [
   {
     id: 1,
     name: 'Evan Yates',
+    avatar: avatar1,
     email: 'evanyates@gmail.com',
     gender: 'Male',
     birthday: 'Apr 12, 1995',
@@ -37,6 +45,7 @@ const initialEmployees = [
   {
     id: 2,
     name: 'Lenora Fowler',
+    avatar: avatar2,
     email: 'eravi@ec.gov',
     gender: 'Female',
     birthday: 'Apr 28, 1998',
@@ -46,9 +55,10 @@ const initialEmployees = [
   },
   {
     id: 3,
-    name: 'nishaf bawa',
+    name: 'Nishaf Bawa',
+    avatar: avatar3,
     email: 'bawa@gmail.com',
-    gender: 'male',
+    gender: 'Male',
     birthday: 'Apr 28, 1998',
     age: 23,
     position: 'UI/UX Designer',
@@ -92,13 +102,11 @@ export default function Employees() {
 
   const handleSave = () => {
     if (form.id) {
-      // UPDATE
       setEmployees(employees.map((e) => (e.id === form.id ? form : e)));
     } else {
-      // CREATE
       setEmployees([
         ...employees,
-        { ...form, id: Date.now() }
+        { ...form, id: Date.now(), avatar: avatar1 }
       ]);
     }
     setOpenDialog(false);
@@ -127,7 +135,9 @@ export default function Employees() {
         {employees.map((emp) => (
           <Card key={emp.id} sx={{ p: 2 }}>
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar>{emp.name[0]}</Avatar>
+              <Avatar src={emp.avatar}>
+                {emp.name?.[0]}
+              </Avatar>
 
               <Box flex={1}>
                 <Typography fontWeight={600}>{emp.name}</Typography>
@@ -154,7 +164,7 @@ export default function Employees() {
               <Box width={180}>
                 <Typography variant="caption">Position</Typography>
                 <Typography>
-                  {emp.position}{' '}
+                  {emp.position}
                   <Chip
                     label={emp.level}
                     size="small"
@@ -187,41 +197,13 @@ export default function Employees() {
 
         <DialogContent>
           <Stack spacing={2} mt={1}>
-            <TextField
-              label="Name"
-              value={form.name || ''}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
-            <TextField
-              label="Email"
-              value={form.email || ''}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
-            <TextField
-              label="Gender"
-              value={form.gender || ''}
-              onChange={(e) => setForm({ ...form, gender: e.target.value })}
-            />
-            <TextField
-              label="Birthday"
-              value={form.birthday || ''}
-              onChange={(e) => setForm({ ...form, birthday: e.target.value })}
-            />
-            <TextField
-              label="Age"
-              value={form.age || ''}
-              onChange={(e) => setForm({ ...form, age: e.target.value })}
-            />
-            <TextField
-              label="Position"
-              value={form.position || ''}
-              onChange={(e) => setForm({ ...form, position: e.target.value })}
-            />
-            <TextField
-              label="Level"
-              value={form.level || ''}
-              onChange={(e) => setForm({ ...form, level: e.target.value })}
-            />
+            <TextField label="Name" value={form.name || ''} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            <TextField label="Email" value={form.email || ''} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <TextField label="Gender" value={form.gender || ''} onChange={(e) => setForm({ ...form, gender: e.target.value })} />
+            <TextField label="Birthday" value={form.birthday || ''} onChange={(e) => setForm({ ...form, birthday: e.target.value })} />
+            <TextField label="Age" value={form.age || ''} onChange={(e) => setForm({ ...form, age: e.target.value })} />
+            <TextField label="Position" value={form.position || ''} onChange={(e) => setForm({ ...form, position: e.target.value })} />
+            <TextField label="Level" value={form.level || ''} onChange={(e) => setForm({ ...form, level: e.target.value })} />
           </Stack>
         </DialogContent>
 

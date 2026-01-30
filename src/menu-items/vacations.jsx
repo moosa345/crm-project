@@ -1,9 +1,5 @@
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 
-const icons = {
-  AirplanemodeActiveIcon
-};
-
 const vacations = {
   id: 'group-vacations',
   title: '',
@@ -14,7 +10,14 @@ const vacations = {
       title: 'Vacations',
       type: 'item',
       url: '/vacations',
-      icon: icons.AirplanemodeActiveIcon,
+      icon: () => (
+        <AirplanemodeActiveIcon
+          sx={{
+            width: 24,
+            height: 24
+          }}
+        />
+      ),
       breadcrumbs: false
     }
   ]
