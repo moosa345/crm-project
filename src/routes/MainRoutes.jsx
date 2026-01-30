@@ -17,6 +17,7 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')))
 const EmployeePage = Loadable(lazy(() => import('../pages/Employee/employee')));
 const ProjectPage = Loadable(lazy(() => import('pages/project')));
 const LogoutPage = Loadable(lazy(() => import('pages/logout')));
+const VacationPage = Loadable(lazy(() => import('pages/vacation')));
 const CalendarPage = Loadable(lazy(() => import('../pages/calendar')));
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -26,7 +27,7 @@ const MainRoutes = {
   element: <DashboardLayout />,
   children: [
     {
-      index: true,              
+      index: true,
       element: <DashboardDefault />
     },
     {
@@ -61,6 +62,10 @@ const MainRoutes = {
     {
       path: 'project',
       element: <ProjectPage />
+    },
+    {
+      path: 'vacations',
+      element: <VacationPage />
     },
     {
       path: 'logout',

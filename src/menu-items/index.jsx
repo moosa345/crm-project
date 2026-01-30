@@ -10,12 +10,10 @@ import calendar from './calendar';
 // import utilities from './utilities';
 // import support from './support';
 
-
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, project, calendar, vacations, employee, logout],
+  items: [dashboard, project, calendar, vacations, employee, logout]
 };
 
 export default menuItems;
-
