@@ -13,8 +13,7 @@ import vacations from './vacations';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, project, vacations, employee, logout],
+  items: [dashboard, project, vacations, employee, logout]
 };
 
 export default menuItems;
-

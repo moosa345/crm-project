@@ -16,18 +16,10 @@ const Shadow = Loadable(lazy(() => import('pages/component-overview/shadows')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
-const EmployeePage = Loadable(
-  lazy(() => import('../pages/Employee/employee'))
-);
-const ProjectPage = Loadable(
-  lazy(() => import('pages/project'))
-);
-const LogoutPage = Loadable(
-  lazy(() => import('pages/logout'))
-);
-
-
-
+const EmployeePage = Loadable(lazy(() => import('../pages/Employee/employee')));
+const ProjectPage = Loadable(lazy(() => import('pages/project')));
+const LogoutPage = Loadable(lazy(() => import('pages/logout')));
+const VacationPage = Loadable(lazy(() => import('pages/vacation')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -68,15 +60,18 @@ const MainRoutes = {
       path: 'Employee',
       element: <EmployeePage />
     },
-     {
+    {
       path: 'project',
       element: <ProjectPage />
     },
     {
-  path: 'logout',
-  element: <LogoutPage />
+      path: 'vacations',
+      element: <VacationPage />
     },
-
+    {
+      path: 'logout',
+      element: <LogoutPage />
+    }
   ]
 };
 

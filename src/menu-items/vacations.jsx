@@ -1,9 +1,7 @@
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 
-
-
 const icons = {
-    AirplanemodeActiveIcon
+  AirplanemodeActiveIcon
 };
 
 const vacations = {
