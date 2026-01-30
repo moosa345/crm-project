@@ -4,30 +4,20 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import DashboardLayout from 'layout/Dashboard';
 
-// render- Dashboard
+// dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));
-// const EmployeePage = Loadable(lazy(() => import('pages/dashboard/employee')));
-// const ProjectPage = Loadable(lazy(()=> import('pages/dashboard/project')));
 
-// render - color
+// components
 const Color = Loadable(lazy(() => import('pages/component-overview/color')));
 const Typography = Loadable(lazy(() => import('pages/component-overview/typography')));
 const Shadow = Loadable(lazy(() => import('pages/component-overview/shadows')));
 
-// render - sample page
+// pages
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
-const EmployeePage = Loadable(
-  lazy(() => import('../pages/Employee/employee'))
-);
-const ProjectPage = Loadable(
-  lazy(() => import('pages/project'))
-);
-const LogoutPage = Loadable(
-  lazy(() => import('pages/logout'))
-);
-
-
-
+const EmployeePage = Loadable(lazy(() => import('../pages/Employee/employee')));
+const ProjectPage = Loadable(lazy(() => import('pages/project')));
+const LogoutPage = Loadable(lazy(() => import('pages/logout')));
+const CalendarPage = Loadable(lazy(() => import('../pages/calendar')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -36,7 +26,7 @@ const MainRoutes = {
   element: <DashboardLayout />,
   children: [
     {
-      path: '/',
+      index: true,              
       element: <DashboardDefault />
     },
     {
@@ -68,15 +58,18 @@ const MainRoutes = {
       path: 'Employee',
       element: <EmployeePage />
     },
-     {
+    {
       path: 'project',
       element: <ProjectPage />
     },
     {
-  path: 'logout',
-  element: <LogoutPage />
+      path: 'logout',
+      element: <LogoutPage />
     },
-
+    {
+      path: 'calendar',
+      element: <CalendarPage />
+    }
   ]
 };
 
