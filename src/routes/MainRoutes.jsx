@@ -11,6 +11,8 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')))
 const Color = Loadable(lazy(() => import('pages/component-overview/color')));
 const Typography = Loadable(lazy(() => import('pages/component-overview/typography')));
 const Shadow = Loadable(lazy(() => import('pages/component-overview/shadows')));
+const Project = Loadable(lazy(() => import('pages/Project')));
+
 
 // pages
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
@@ -19,6 +21,7 @@ const ProjectPage = Loadable(lazy(() => import('pages/project')));
 const LogoutPage = Loadable(lazy(() => import('pages/logout')));
 const VacationPage = Loadable(lazy(() => import('pages/vacation')));
 const CalendarPage = Loadable(lazy(() => import('../pages/calendar')));
+
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -78,4 +81,4 @@ const MainRoutes = {
   ]
 };
 
-export default MainRoutes;
+export default MainRoutes; 
