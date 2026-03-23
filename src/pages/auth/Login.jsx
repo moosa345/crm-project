@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 // import { Link } from "react-router-dom";
 import logo from '../../assets/images/users/company-Logo.png';
-import image from '../../assets/images/users/illustration.svg';
+import image from '../../assets/images/users/Illustration.svg';
 import './Login.css';
 
 // material-ui
