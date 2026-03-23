@@ -18,7 +18,7 @@ const SamplePage = Loadable(lazy(() => import('../pages/extra-pages/sample-page'
 const EmployeePage = Loadable(lazy(() => import('../pages/Employee/employee')));
 const ProjectPage = Loadable(lazy(() => import('../pages/Project')));
 const LogoutPage = Loadable(lazy(() => import('../pages/logout')));
-const VacationPage = Loadable(lazy(() => import('pages/vacation')));
+const VacationPage = Loadable(lazy(() => import('../pages/Vacation')));
 const CalendarPage = Loadable(lazy(() => import('../pages/calendar')));
 
 // ==============================|| MAIN ROUTING ||============================== //
