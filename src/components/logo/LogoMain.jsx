@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 
-import logo from 'assets/images/users/company-logo.png';
+import logo from 'assets/images/users/Company-logo.png';
 
 // ==============================|| LOGO IMAGE ||============================== //
 
