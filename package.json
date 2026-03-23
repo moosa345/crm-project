@@ -2,12 +2,8 @@
   "name": "crm",
   "version": "2.0.1",
   "private": true,
-  "homepage": "https://mantisdashboard.com/free",
-  "author": {
-    "name": "CodedThemes",
-    "email": "codedthemes@gmail.com",
-    "url": "https://codedthemes.com/"
-  },
+  "homepage": "crm",
+
 
   "scripts": {
     "start": "vite",
