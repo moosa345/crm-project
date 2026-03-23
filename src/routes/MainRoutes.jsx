@@ -16,7 +16,7 @@ const Shadow = Loadable(lazy(() => import('pages/component-overview/shadows')));
 // pages
 const SamplePage = Loadable(lazy(() => import('../pages/extra-pages/sample-page')));
 const EmployeePage = Loadable(lazy(() => import('../pages/Employee/employee')));
-const ProjectPage = Loadable(lazy(() => import('../pages/project')));
+const ProjectPage = Loadable(lazy(() => import('../pages/Project')));
 const LogoutPage = Loadable(lazy(() => import('../pages/logout')));
 const VacationPage = Loadable(lazy(() => import('../pages/vacation')));
 const CalendarPage = Loadable(lazy(() => import('../pages/calendar')));
