@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -11,188 +11,247 @@ import {
   DialogActions,
   Avatar,
   Chip,
-  IconButton
-} from '@mui/material';
+  IconButton,
+  Grid
+} from "@mui/material";
 
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MainCard from 'components/MainCard';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
-// ✅ avatar images
-import user1 from 'assets/images/users/avatar-1.png';
-import user2 from 'assets/images/users/avatar-2.png';
-import user3 from 'assets/images/users/avatar-3.png';
-import user4 from 'assets/images/users/avatar-4.png';
-import user5 from 'assets/images/users/avatar-5.png';
+import MainCard from "components/MainCard";
 
+import { useProjectStore } from "store/useProjectStore";
+
+import user1 from "assets/images/users/avatar-1.png";
+import user2 from "assets/images/users/avatar-2.png";
+import user3 from "assets/images/users/avatar-3.png";
+import user4 from "assets/images/users/avatar-4.png";
+import user5 from "assets/images/users/avatar-5.png";
 
 export default function ProjectPage() {
+
+  const { projects, fetchProjects, addProject, updateProject, deleteProject } =
+    useProjectStore();
+
   const [open, setOpen] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [editId, setEditId] = useState(null);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setEditIndex(null);
-  };
-
-  // ✅ Assignee list
   const assignees = [
-    { name: 'Alice Johnson', avatar: user1 },
-    { name: 'Bob Smith', avatar: user2 },
-    { name: 'Charlie Brown', avatar: user3 },
-    { name: 'Diana Prince', avatar: user4 },
-    { name: 'Ethan Hunt', avatar: user5 }
+    { name: "Alice Johnson", avatar: user1 },
+    { name: "Bob Smith", avatar: user2 },
+    { name: "Charlie Brown", avatar: user3 },
+    { name: "Diana Prince", avatar: user4 },
+    { name: "Ethan Hunt", avatar: user5 }
   ];
 
-  // ✅ Tasks
-  const [tasks, setTasks] = useState([
-    { name: 'Bava water', estimate: '2d 4h', spent: '1d 2h', assignee: assignees[0], priority: 'Medium', status: 'Done' },
-    { name: 'Mind Map', estimate: '1d 2h', spent: '4h 25m', assignee: assignees[1], priority: 'Medium', status: 'In Progress' },
-    { name: 'UX sketches', estimate: '4d', spent: '2d 2h 20m', assignee: assignees[2], priority: 'Low', status: 'In Progress' }
-  ]);
-
-  // ✅ Form
   const [form, setForm] = useState({
-    name: '',
-    priority: 'Medium',
-    description: '',
+    name: "",
+    priority: "Medium",
+    description: "",
     assignee: assignees[0],
-    estimate: '1d',
-    spent: '0h',
-    status: 'To Do'
+    status: "To Do"
   });
 
-  const statusColor = {
-    Done: 'success',
-    'In Progress': 'info',
-    'In Review': 'secondary',
-    'To Do': 'default'
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const handleOpen = () => setOpen(true);
+
+  const handleClose = () => {
+    setOpen(false);
+    setEditId(null);
   };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ SAVE (Add / Edit)
-  const handleSave = () => {
-    if (!form.name) return;
+  const handleSave = async () => {
 
-    if (editIndex !== null) {
-      const updated = [...tasks];
-      updated[editIndex] = form;
-      setTasks(updated);
+    const data = {
+      name: form.name,
+      assignee: form.assignee.name,
+      priority: form.priority,
+      description: form.description,
+      status: form.status
+    };
+
+    if (editId) {
+      await updateProject(editId, data);
     } else {
-      setTasks([...tasks, form]);
+      await addProject(data);
     }
 
     setForm({
-      name: '',
-      priority: 'Medium',
-      description: '',
+      name: "",
+      priority: "Medium",
+      description: "",
       assignee: assignees[0],
-      estimate: '1d',
-      spent: '0h',
-      status: 'To Do'
+      status: "To Do"
     });
 
     handleClose();
   };
 
-  // ✅ DELETE
-  const handleDelete = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
+  const handleEdit = (task) => {
+    const selected = assignees.find((a) => a.name === task.assignee);
+
+    setForm({
+      name: task.name,
+      priority: task.priority,
+      description: task.description,
+      assignee: selected || assignees[0],
+      status: task.status
+    });
+
+    setEditId(task._id);
+    handleOpen();
   };
 
-  // ✅ EDIT
-  const handleEdit = (task, index) => {
-    setForm(task);
-    setEditIndex(index);
-    handleOpen();
+  const confirmDelete = async () => {
+    await deleteProject(selectedId);
+    setDeleteOpen(false);
+  };
+
+  const statusColumns = ["To Do", "In Progress", "Done"];
+
+  const statusColor = {
+    "To Do": "default",
+    "In Progress": "info",
+    Done: "success"
   };
 
   return (
     <Box p={3}>
-      {/* Header */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4">Project Tasks</Typography>
+
+      <Box display="flex" justifyContent="space-between" mb={3}>
+        <Typography variant="h4">Project Board</Typography>
+
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpen}>
-          Add Project
+          Add Task
         </Button>
       </Box>
 
-      {/* Task List */}
-      {tasks.map((task, index) => (
-        <MainCard key={index} sx={{ mb: 2 }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Box display="flex" alignItems="center" gap={3}>
-              <Typography sx={{ width: 150 }}>{task.name}</Typography>
-              <Typography sx={{ width: 100 }}>{task.estimate}</Typography>
-              <Typography sx={{ width: 100 }}>{task.spent}</Typography>
+      {/* JIRA STYLE BOARD */}
+      <Grid container spacing={3}>
 
-              {/* ✅ Avatar */}
-              <Avatar src={task.assignee.avatar} />
+        {statusColumns.map((status) => (
 
-              <Typography color={task.priority === 'Low' ? 'green' : 'orange'}>
-                {task.priority}
-              </Typography>
+          <Grid item xs={4} key={status}>
 
-              <Chip label={task.status} color={statusColor[task.status]} />
-            </Box>
+            <Typography variant="h6" mb={2}>
+              {status}
+            </Typography>
 
-            {/* Actions */}
-            <Box>
-              <IconButton color="primary" onClick={() => handleEdit(task, index)}>
-                <EditIcon />
-              </IconButton>
+            {projects
+              .filter((task) => task.status === status)
+              .map((task) => (
+                <MainCard key={task._id} sx={{ mb: 2 }}>
 
-              <IconButton color="error" onClick={() => handleDelete(index)}>
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          </Box>
-        </MainCard>
-      ))}
+                  <Box display="flex" justifyContent="space-between">
 
-      {/* Dialog */}
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle>{editIndex !== null ? 'Edit Project' : 'Add Project'}</DialogTitle>
+                    <Box>
+
+                      <Typography fontWeight="bold">
+                        {task.name}
+                      </Typography>
+
+                      <Typography variant="body2">
+                        {task.description}
+                      </Typography>
+
+                      <Box mt={1} display="flex" gap={1} alignItems="center">
+
+                        <Avatar sx={{ width: 24, height: 24 }} />
+
+                        <Chip
+                          label={task.priority}
+                          color="warning"
+                          size="small"
+                        />
+
+                        <Chip
+                          label={task.status}
+                          color={statusColor[task.status]}
+                          size="small"
+                        />
+
+                      </Box>
+
+                    </Box>
+
+                    <Box>
+
+                      <IconButton onClick={() => handleEdit(task)}>
+                        <EditIcon />
+                      </IconButton>
+
+                      <IconButton
+                        color="error"
+                        onClick={() => {
+                          setSelectedId(task._id);
+                          setDeleteOpen(true);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+
+                    </Box>
+
+                  </Box>
+
+                </MainCard>
+              ))}
+
+          </Grid>
+
+        ))}
+
+      </Grid>
+
+      {/* ADD / EDIT DIALOG */}
+
+      <Dialog open={open} onClose={handleClose} fullWidth>
+
+        <DialogTitle>
+          {editId ? "Edit Project" : "Add Project"}
+        </DialogTitle>
 
         <DialogContent>
+
           <Box display="flex" flexDirection="column" gap={2} mt={1}>
+
             <TextField
-              fullWidth
               label="Project Name"
               name="name"
               value={form.name}
               onChange={handleChange}
             />
 
-            {/* Assignee with Avatar */}
             <TextField
               select
-              fullWidth
               label="Assignee"
               value={form.assignee.name}
               onChange={(e) => {
-                const selected = assignees.find(a => a.name === e.target.value);
+                const selected = assignees.find(
+                  (a) => a.name === e.target.value
+                );
                 setForm({ ...form, assignee: selected });
               }}
             >
               {assignees.map((a) => (
                 <MenuItem key={a.name} value={a.name}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Avatar src={a.avatar} />
-                    {a.name}
-                  </Box>
+                  {a.name}
                 </MenuItem>
               ))}
             </TextField>
 
             <TextField
               select
-              fullWidth
               label="Priority"
               name="priority"
               value={form.priority}
@@ -204,24 +263,64 @@ export default function ProjectPage() {
             </TextField>
 
             <TextField
-              fullWidth
+              select
+              label="Status"
+              name="status"
+              value={form.status}
+              onChange={handleChange}
+            >
+              <MenuItem value="To Do">To Do</MenuItem>
+              <MenuItem value="In Progress">In Progress</MenuItem>
+              <MenuItem value="Done">Done</MenuItem>
+            </TextField>
+
+            <TextField
               label="Description"
               name="description"
-              value={form.description}
-              onChange={handleChange}
               multiline
               rows={3}
+              value={form.description}
+              onChange={handleChange}
             />
+
           </Box>
+
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" onClick={handleSave}>
-            {editIndex !== null ? 'Update' : 'Save'}
+
+          <Button onClick={handleClose}>
+            Cancel
           </Button>
+
+          <Button variant="contained" onClick={handleSave}>
+            {editId ? "Update" : "Save"}
+          </Button>
+
         </DialogActions>
+
       </Dialog>
+
+      {/* DELETE CONFIRMATION */}
+
+      <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)}>
+
+        <DialogTitle>Delete Project?</DialogTitle>
+
+        <DialogActions>
+
+          <Button onClick={() => setDeleteOpen(false)}>
+            Cancel
+          </Button>
+
+          <Button color="error" onClick={confirmDelete}>
+            Delete
+          </Button>
+
+        </DialogActions>
+
+      </Dialog>
+
     </Box>
   );
 }
