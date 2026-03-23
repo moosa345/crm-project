@@ -1,20 +1,24 @@
 {
   "name": "mantis-material-free-react",
   "version": "2.0.1",
+  "private": true,
   "homepage": "https://mantisdashboard.com/free",
   "author": {
     "name": "CodedThemes",
     "email": "codedthemes@gmail.com",
     "url": "https://codedthemes.com/"
   },
+
   "scripts": {
     "start": "vite",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
+
   "dependencies": {
     "@ant-design/colors": "7.2.1",
     "@ant-design/icons": "6.1.0",
@@ -70,6 +74,7 @@
       "last 1 safari version"
     ]
   },
+
   "devDependencies": {
     "@eslint/compat": "2.0.0",
     "@eslint/eslintrc": "3.3.3",
@@ -82,5 +87,17 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "prettier": "3.7.4"
   },
-  "packageManager": "yarn@4.12.0"
+
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  },
+
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

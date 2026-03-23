@@ -2,7 +2,6 @@ import { Box } from '@mui/material';
 
 import logoIcon from 'assets/images/users/company-logo.png';
 
-
 export default function LogoIcon() {
   return (
     <Box
