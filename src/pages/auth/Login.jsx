@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 // import { Link } from "react-router-dom";
-import logo from '../../assets/images/users/Company-Logo.png';
+import logo from '../../assets/images/users/Company-logo.png';
 import image from '../../assets/images/users/Illustration.svg';
 import './Login.css';
 
