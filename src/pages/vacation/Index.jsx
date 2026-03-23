@@ -29,7 +29,7 @@ export default function VacationPage() {
     setForm(null);
   };
 
-  /* DELETE */
+  /* DELETE 2 */
   const removeVacation = async (id) => {
     await deleteVacation(id);
   };
