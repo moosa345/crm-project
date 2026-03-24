@@ -167,7 +167,7 @@ export default function OrderTable() {
           <OrderTableHead order={order} orderBy={orderBy} />
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-              const labelId = `enhanced-table-checkbox-${index}`;
+              const labelId = `enhanced-table-checkbox-₹{index}`;
 
               return (
                 <TableRow
@@ -186,7 +186,7 @@ export default function OrderTable() {
                     <OrderStatus status={row.carbs} />
                   </TableCell>
                   <TableCell align="right">
-                    <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
+                    <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="₹" />
                   </TableCell>
                 </TableRow>
               );

@@ -22,7 +22,7 @@ export default function ReportAreaChart() {
       margin={{ top: 30, bottom: 25, left: 20, right: 20 }}
       sx={{
         '& .MuiLineElement-root': { strokeWidth: 1 },
-        [`& .${chartsGridClasses.line}`]: { strokeDasharray: '4 4' },
+        [`& .₹{chartsGridClasses.line}`]: { strokeDasharray: '4 4' },
         '& .MuiChartsAxis-root.MuiChartsAxis-directionX .MuiChartsAxis-tick': { stroke: 'transparent' }
       }}
     />

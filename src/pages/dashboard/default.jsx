@@ -81,10 +81,10 @@ export default function DashboardDefault() {
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
+        <AnalyticEcommerce title="Total projects" count="4,42,236" percentage={59.3} extra="35,000" />
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        <AnalyticEcommerce title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
+        <AnalyticEcommerce title="Total employees" count="78,250" percentage={70.5} extra="8,900" />
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
         <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
@@ -110,7 +110,7 @@ export default function DashboardDefault() {
               <Typography variant="h6" color="text.secondary">
                 This Week Statistics
               </Typography>
-              <Typography variant="h3">$7,650</Typography>
+              <Typography variant="h3"> ₹7,650</Typography>
             </Stack>
           </Box>
           <MonthlyBarChart />
@@ -120,7 +120,7 @@ export default function DashboardDefault() {
       <Grid size={{ xs: 12, md: 7, lg: 8 }}>
         <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
           <Grid>
-            <Typography variant="h5">Recent Orders</Typography>
+            <Typography variant="h5">Recent orders</Typography>
           </Grid>
           <Grid>
             <IconButton onClick={handleOrderMenuClick}>
@@ -218,7 +218,7 @@ export default function DashboardDefault() {
               secondaryAction={
                 <Stack sx={{ alignItems: 'flex-end' }}>
                   <Typography variant="subtitle1" noWrap>
-                    + $1,430
+                    + ₹1,430
                   </Typography>
                   <Typography variant="h6" color="secondary" noWrap>
                     78%
@@ -231,7 +231,7 @@ export default function DashboardDefault() {
                   <GiftOutlined />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={<Typography variant="subtitle1">Order #002434</Typography>} secondary="Today, 2:00 AM" />
+              <ListItemText primary={<Typography variant="subtitle1">Order #3646f8</Typography>} secondary="Today, 2:00 AM" />
             </ListItem>
             <ListItem
               component={ListItemButton}
@@ -239,7 +239,7 @@ export default function DashboardDefault() {
               secondaryAction={
                 <Stack sx={{ alignItems: 'flex-end' }}>
                   <Typography variant="subtitle1" noWrap>
-                    + $302
+                    + ₹302
                   </Typography>
                   <Typography variant="h6" color="secondary" noWrap>
                     8%
@@ -259,7 +259,7 @@ export default function DashboardDefault() {
               secondaryAction={
                 <Stack sx={{ alignItems: 'flex-end' }}>
                   <Typography variant="subtitle1" noWrap>
-                    + $682
+                    + ₹682
                   </Typography>
                   <Typography variant="h6" color="secondary" noWrap>
                     16%
@@ -281,26 +281,14 @@ export default function DashboardDefault() {
             <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
               <Grid>
                 <Stack>
-                  <Typography variant="h5" noWrap>
-                    Help & Support Chat
-                  </Typography>
-                  <Typography variant="caption" color="secondary" noWrap>
-                    Typical replay within 5 min
-                  </Typography>
+                 
                 </Stack>
               </Grid>
               <Grid>
-                <AvatarGroup sx={{ '& .MuiAvatar-root': { width: 32, height: 32 } }}>
-                  <Avatar alt="Remy Sharp" src={avatar1} />
-                  <Avatar alt="Travis Howard" src={avatar2} />
-                  <Avatar alt="Cindy Baker" src={avatar3} />
-                  <Avatar alt="Agnes Walker" src={avatar4} />
-                </AvatarGroup>
+               
               </Grid>
             </Grid>
-            <Button size="small" variant="contained" sx={{ textTransform: 'capitalize' }}>
-              Need Help?
-            </Button>
+           
           </Stack>
         </MainCard>
       </Grid>

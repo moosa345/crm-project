@@ -38,7 +38,7 @@ export default function SalesChart() {
     }
   };
 
-  const valueFormatter = (value) => `$ ${value} Thousands`;
+  const valueFormatter = (value) => `₹ ₹{value} Thousands`;
   const primaryColor = theme.vars.palette.primary.main;
   const primaryLightColor = theme.vars.palette.primary.lighter;
   const warningColor = theme.vars.palette.warning.main;
@@ -77,7 +77,7 @@ export default function SalesChart() {
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               Net Profit
             </Typography>
-            <Typography variant="h4">$1560</Typography>
+            <Typography variant="h4">₹1560</Typography>
           </Box>
 
           <Stack direction="row" sx={{ gap: 3 }}>
