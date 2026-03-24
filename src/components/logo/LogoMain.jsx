@@ -1,7 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import logoIcon from 'assets/images/users/company-logo.png';
 
-export default function LogoIcon() {
+import { Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
+
+import logo from 'assets/images/users/Company-logo.png';
+
+// ==============================|| LOGO IMAGE ||============================== //
+
+export default function LogoMain() {
+  const theme = useTheme();
+
   return (
     <Box display="flex" alignItems="center">
       

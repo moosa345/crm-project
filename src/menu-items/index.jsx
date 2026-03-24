@@ -1,6 +1,4 @@
-// project import
 import dashboard from './dashboard';
-// import pages from './page';
 import project from './project';
 import employee from './employee';
 import logout from './logout';

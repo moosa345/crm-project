@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import logoIcon from 'assets/images/users/company-logo.png';
+import logoIcon from 'assets/images/users/Company-logo.png';
 
 export default function LogoIcon() {
   return (

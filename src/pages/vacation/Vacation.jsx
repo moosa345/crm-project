@@ -29,7 +29,7 @@ export default function VacationPage() {
     setForm(null);
   };
 
-  /* DELETE */
+  /* DELETE 2 */
   const removeVacation = async (id) => {
     await deleteVacation(id);
   };
@@ -42,8 +42,6 @@ export default function VacationPage() {
 
         <div style={{ display: "flex", gap: 16 }}>
           <div style={tabs}>
-            <span style={activeTab}>Employees’ vacations</span>
-            <span style={tab}>Calendar</span>
           </div>
 
           <button style={addBtn} onClick={() => setForm({})}>
