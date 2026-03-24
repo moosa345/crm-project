@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 
 import { BarChart } from '@mui/x-charts';
 
@@ -13,15 +14,15 @@ import { BarChart } from '@mui/x-charts';
 import MainCard from 'components/MainCard';
 import { withAlpha } from 'utils/colorUtils';
 
-// ==============================|| SALES COLUMN CHART ||============================== //
+// ==============================|| CRM REVENUE BAR CHART ||============================== //
 
 export default function SalesChart() {
   const theme = useTheme();
   const downSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [seriesVisibility, setSeriesVisibility] = useState({
-    Income: true,
-    'Cost of Sales': true
+    Revenue: true,
+    Expenses: true
   });
 
   const [highlightedItem, setHighlightedItem] = useState(null);
@@ -38,50 +39,94 @@ export default function SalesChart() {
     }
   };
 
-  const valueFormatter = (value) => `$ ${value} Thousands`;
-  const primaryColor = theme.vars.palette.primary.main;
-  const primaryLightColor = theme.vars.palette.primary.lighter;
-  const warningColor = theme.vars.palette.warning.main;
-  const warningLightColor = theme.vars.palette.warning.lighter;
+  const valueFormatter = (value) => `$${value}k`;
 
-  const labels = ['07.06', '08.06', '09.06', '10.06', '11.06', '12.06', '13.06'];
+  const successColor = theme.vars.palette.success.main;
+  const successLight = theme.vars.palette.success.lighter;
+  const errorColor = theme.vars.palette.error.main;
+  const errorLight = theme.vars.palette.error.lighter;
+
+  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   const initialSeries = [
-    { id: 'Income', data: [180, 90, 135, 114, 120, 200, 145], stack: 'income', label: 'Income', color: warningColor, valueFormatter },
-    { id: 'Income2', data: [20, 110, 65, 86, 80, 0, 55], stack: 'income', label: 'Income', color: warningLightColor, valueFormatter },
     {
-      id: 'CostOfSales',
-      data: [120, 45, 78, 150, 168, 145, 99],
-      stack: 'cos',
-      label: 'Cost of Sales',
-      color: primaryColor,
+      id: 'Revenue',
+      data: [18, 24, 21, 28, 26, 31, 29],
+      stack: 'revenue',
+      label: 'Revenue',
+      color: successColor,
       valueFormatter
     },
     {
-      id: 'CostOfSales2',
-      data: [80, 155, 122, 50, 32, 55, 101],
-      stack: 'cos',
-      label: 'Cost of Sales',
-      color: primaryLightColor,
+      id: 'Revenue2',
+      data: [4, 6, 5, 7, 6, 8, 7],
+      stack: 'revenue',
+      label: 'Revenue',
+      color: successLight,
+      valueFormatter
+    },
+    {
+      id: 'Expenses',
+      data: [10, 14, 12, 16, 15, 18, 13],
+      stack: 'expenses',
+      label: 'Expenses',
+      color: errorColor,
+      valueFormatter
+    },
+    {
+      id: 'Expenses2',
+      data: [3, 5, 4, 5, 4, 6, 5],
+      stack: 'expenses',
+      label: 'Expenses',
+      color: errorLight,
       valueFormatter
     }
   ];
 
-  const initialSeriesCopy = [...initialSeries.slice(0, 1), ...initialSeries.slice(2, 3)];
+  const legendSeries = [...initialSeries.slice(0, 1), ...initialSeries.slice(2, 3)];
 
   return (
-    <MainCard sx={{ mt: 1 }} content={false}>
+    <MainCard sx={{ mt: 1, borderRadius: 4 }} content={false}>
       <Box sx={{ p: 2.5, pb: 0 }}>
-        <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Header */}
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          sx={{
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            justifyContent: 'space-between',
+            gap: 2,
+            mb: 1
+          }}
+        >
           <Box>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Net Profit
+            <Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary" gutterBottom>
+              💰 Weekly Revenue Overview
             </Typography>
-            <Typography variant="h4">$1560</Typography>
+            <Typography variant="h4" sx={{ fontWeight: 700 }}>
+              $48.6k
+            </Typography>
+
+            <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+              <Chip
+                label="📈 +12.4% Growth"
+                size="small"
+                color="success"
+                variant="outlined"
+                sx={{ borderRadius: 2, fontWeight: 600 }}
+              />
+              <Chip
+                label="🔥 Strong Week"
+                size="small"
+                color="warning"
+                variant="outlined"
+                sx={{ borderRadius: 2, fontWeight: 600 }}
+              />
+            </Stack>
           </Box>
 
-          <Stack direction="row" sx={{ gap: 3 }}>
-            {initialSeriesCopy.map((series) => (
+          {/* Legend */}
+          <Stack direction="row" sx={{ gap: 3, flexWrap: 'wrap' }}>
+            {legendSeries.map((series) => (
               <Stack
                 key={series.label}
                 direction="row"
@@ -93,44 +138,87 @@ export default function SalesChart() {
                   alignItems: 'center',
                   opacity: seriesVisibility[series.label] ? 1 : 0.45,
                   cursor: 'pointer',
-                  transition: 'opacity 0.2s ease-in-out'
+                  transition: 'all 0.2s ease-in-out',
+                  px: 1.2,
+                  py: 0.75,
+                  borderRadius: 2,
+                  '&:hover': {
+                    bgcolor: 'action.hover'
+                  }
                 }}
               >
-                <Box sx={{ height: 10, width: 10, borderRadius: '50%', backgroundColor: series.color }} />
-                <Typography>{series.label}</Typography>
+                <Box
+                  sx={{
+                    height: 10,
+                    width: 10,
+                    borderRadius: '50%',
+                    backgroundColor: series.color
+                  }}
+                />
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  {series.label}
+                </Typography>
               </Stack>
             ))}
           </Stack>
         </Stack>
 
+        {/* Chart */}
         <BarChart
           hideLegend
-          height={380}
+          height={360}
           grid={{ horizontal: true }}
           xAxis={[
             {
-              id: 'sales-x-axis',
+              id: 'crm-revenue-x-axis',
               data: labels,
-              tickSize: 7,
+              scaleType: 'band',
+              tickSize: 0,
               disableLine: true,
-              categoryGapRatio: downSM ? 0.5 : 0.7,
-              barGapRatio: downSM ? 0.4 : 0.7
+              categoryGapRatio: downSM ? 0.45 : 0.55,
+              barGapRatio: downSM ? 0.25 : 0.35
             }
           ]}
-          yAxis={[{ disableLine: true, tickSize: 7, tickMaxStep: 50 }]}
+          yAxis={[
+            {
+              disableLine: true,
+              tickSize: 0,
+              tickMaxStep: 10
+            }
+          ]}
           series={initialSeries
-            .map((series) => ({ ...series, type: 'bar', color: withAlpha(series.color, 0.85), visible: seriesVisibility[series.label] }))
+            .map((series) => ({
+              ...series,
+              type: 'bar',
+              color: withAlpha(series.color, 0.9),
+              visible: seriesVisibility[series.label]
+            }))
             .filter((series) => series.visible)}
           highlightedItem={highlightedItem}
-          slotProps={{ bar: { rx: 4, ry: 4 }, tooltip: { trigger: 'item' } }}
+          slotProps={{
+            bar: { rx: 6, ry: 6 },
+            tooltip: { trigger: 'item' }
+          }}
           axisHighlight={{ x: 'none' }}
-          margin={{ top: 30, left: -5, bottom: 25, right: 10 }}
+          margin={{ top: 20, left: 5, bottom: 20, right: 5 }}
           sx={{
-            '& .MuiBarElement-root:hover': { opacity: 0.6 },
-            '& .MuiChartsGrid-line': { strokeDasharray: '4 4', stroke: theme.vars.palette.divider },
-            '& .MuiBarElement-series-auto-generated-id-0, & .MuiBarElement-series-auto-generated-id-1': { width: 15 },
-            '& .MuiChartsAxis-root.MuiChartsAxis-directionX .MuiChartsAxis-tick': { stroke: 'transparent' },
-            '& .MuiChartsAxis-root.MuiChartsAxis-directionY .MuiChartsAxis-tick': { stroke: 'transparent' }
+            '& .MuiBarElement-root:hover': {
+              opacity: 0.75
+            },
+            '& .MuiChartsGrid-line': {
+              strokeDasharray: '4 4',
+              stroke: theme.vars.palette.divider
+            },
+            '& .MuiChartsAxis-root.MuiChartsAxis-directionX .MuiChartsAxis-tick': {
+              stroke: 'transparent'
+            },
+            '& .MuiChartsAxis-root.MuiChartsAxis-directionY .MuiChartsAxis-tick': {
+              stroke: 'transparent'
+            },
+            '& .MuiChartsAxis-tickLabel': {
+              fill: theme.vars.palette.text.secondary,
+              fontSize: 12
+            }
           }}
         />
       </Box>

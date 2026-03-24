@@ -1,152 +1,275 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  InputAdornment,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+  useTheme
+} from '@mui/material';
 
-// third-party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-
-// project imports
-import IconButton from 'components/@extended/IconButton';
-import AnimateButton from 'components/@extended/AnimateButton';
+// icons
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 // assets
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
+import logo from '../../assets/images/users/Company-logo.png';
+import image from '../../assets/images/users/Illustration.svg';
 
-// ============================|| JWT - LOGIN ||============================ //
+const Login = () => {
+  const theme = useTheme();
 
-export default function AuthLogin({ isDemo = false }) {
-  const [checked, setChecked] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const storedPassword = localStorage.getItem(email);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+    if (storedPassword === password) {
+      console.log('Login successful!');
+    } else {
+      console.log('Invalid username or password');
+    }
   };
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          email: 'info@codedthemes.com',
-          password: '123456',
-          submit: null
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        bgcolor: 'background.default'
+      }}
+    >
+      {/* Left Side */}
+      <Box
+        sx={{
+          width: { xs: '100%', md: '50%' },
+          display: { xs: 'none', md: 'flex' },
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          p: { md: 5, lg: 7 },
+          color: '#fff',
+          background: 'linear-gradient(135deg, #3f8cff 0%, #2563eb 100%)',
+          borderTopRightRadius: 28,
+          borderBottomRightRadius: 28
         }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string()
-            .required('Password is required')
-            .test('no-leading-trailing-whitespace', 'Password cannot start or end with spaces', (value) => value === value.trim())
-            .max(10, 'Password must be less than 10 characters')
-        })}
       >
-        {({ errors, handleBlur, handleChange, touched, values }) => (
-          <form noValidate>
-            <Grid container spacing={3}>
-              <Grid size={12}>
-                <Stack sx={{ gap: 1 }}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
-                  <OutlinedInput
-                    id="email-login"
-                    type="email"
-                    value={values.email}
-                    name="email"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter email address"
-                    fullWidth
-                    error={Boolean(touched.email && errors.email)}
-                  />
-                </Stack>
-                {touched.email && errors.email && (
-                  <FormHelperText error id="standard-weight-helper-text-email-login">
-                    {errors.email}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid size={12}>
-                <Stack sx={{ gap: 1 }}>
-                  <InputLabel htmlFor="password-login">Password</InputLabel>
-                  <OutlinedInput
-                    fullWidth
-                    error={Boolean(touched.password && errors.password)}
-                    id="-password-login"
-                    type={showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    name="password"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                          color="secondary"
-                        >
-                          {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    placeholder="Enter password"
-                  />
-                </Stack>
-                {touched.password && errors.password && (
-                  <FormHelperText error id="standard-weight-helper-text-password-login">
-                    {errors.password}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid sx={{ mt: -1 }} size={12}>
-                <Stack direction="row" sx={{ gap: 2, alignItems: 'baseline', justifyContent: 'space-between' }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={checked}
-                        onChange={(event) => setChecked(event.target.checked)}
-                        name="checked"
-                        color="primary"
-                        size="small"
-                      />
-                    }
-                    label={<Typography variant="h6">Keep me sign in</Typography>}
-                  />
-                  <Link variant="h6" component={RouterLink} to="#" color="text.primary">
-                    Forgot Password?
-                  </Link>
-                </Stack>
-              </Grid>
-              <Grid size={12}>
-                <AnimateButton>
-                  <Button fullWidth size="large" variant="contained" color="primary">
-                    Login
-                  </Button>
-                </AnimateButton>
-              </Grid>
-            </Grid>
-          </form>
-        )}
-      </Formik>
-    </>
-  );
-}
+        {/* Brand */}
+        <Stack direction="row" spacing={2} alignItems="center">
+          <Box
+            component="img"
+            src={logo}
+            alt="Company Logo"
+            sx={{
+              width: 52,
+              height: 52,
+              objectFit: 'contain'
+            }}
+          />
+          <Typography variant="h4" sx={{ fontWeight: 700, color: '#fff' }}>
+            Woorkroom
+          </Typography>
+        </Stack>
 
-AuthLogin.propTypes = { isDemo: PropTypes.bool };
+        {/* Hero Content */}
+        <Box sx={{ mt: 4 }}>
+          <Typography
+            variant="h2"
+            sx={{
+              fontWeight: 800,
+              lineHeight: 1.2,
+              mb: 2,
+              fontSize: { md: '2.2rem', lg: '3rem' }
+            }}
+          >
+            YOUR PLACE TO WORK
+            <br />
+            PLAN. CREATE. CONTROL.
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'rgba(255,255,255,0.9)',
+              maxWidth: 500,
+              lineHeight: 1.8
+            }}
+          >
+            Manage your projects, tasks, team collaboration, and CRM workflow in one smart workspace.
+          </Typography>
+        </Box>
+
+        {/* Illustration */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            pt: 4
+          }}
+        >
+          <Box
+            component="img"
+            src={image}
+            alt="Illustration"
+            sx={{
+              width: '100%',
+              maxWidth: 430,
+              height: 'auto'
+            }}
+          />
+        </Box>
+      </Box>
+
+      {/* Right Side */}
+      <Box
+        sx={{
+          width: { xs: '100%', md: '50%' },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          px: { xs: 2.5, sm: 4, md: 6 },
+          py: { xs: 4, md: 6 },
+          bgcolor: '#f8fafc'
+        }}
+      >
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: 460,
+            p: { xs: 3, sm: 4.5 },
+            borderRadius: 4,
+            bgcolor: 'background.paper',
+            boxShadow: '0 16px 40px rgba(15, 23, 42, 0.08)',
+            border: `1px solid ${theme.palette.divider}`
+          }}
+        >
+          {/* Mobile brand */}
+          <Stack
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            sx={{ display: { xs: 'flex', md: 'none' }, mb: 3 }}
+          >
+            <Box
+              component="img"
+              src={logo}
+              alt="Company Logo"
+              sx={{
+                width: 42,
+                height: 42,
+                objectFit: 'contain'
+              }}
+            />
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>
+              Woorkroom
+            </Typography>
+          </Stack>
+
+          <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
+            Sign In
+          </Typography>
+
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
+            Welcome back! Please enter your details to continue.
+          </Typography>
+
+          <Box component="form" onSubmit={handleLogin}>
+            <Stack spacing={2.5}>
+              <Box>
+                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                  Email Address
+                </Typography>
+                <TextField
+                  fullWidth
+                  type="email"
+                  placeholder="youremail@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </Box>
+
+              <Box>
+                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                  Password
+                </Typography>
+                <TextField
+                  fullWidth
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                            {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }
+                  }}
+                />
+              </Box>
+
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                alignItems={{ xs: 'flex-start', sm: 'center' }}
+                justifyContent="space-between"
+                spacing={1}
+              >
+                <FormControlLabel
+                  control={<Checkbox checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />}
+                  label={<Typography variant="body2">Remember me</Typography>}
+                />
+
+                <Link component={RouterLink} to="/forgot-password" underline="hover" sx={{ fontWeight: 600 }}>
+                  Forgot Password?
+                </Link>
+              </Stack>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                size="large"
+                sx={{
+                  mt: 1,
+                  py: 1.4,
+                  borderRadius: 3,
+                  textTransform: 'none',
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  boxShadow: 'none'
+                }}
+              >
+                Log In →
+              </Button>
+            </Stack>
+          </Box>
+
+          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', mt: 3 }}>
+            Don&apos;t have an account?{' '}
+            <Link component={RouterLink} to="/register" underline="hover" sx={{ fontWeight: 700 }}>
+              Sign up
+            </Link>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default authLogin;

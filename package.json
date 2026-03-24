@@ -3,7 +3,6 @@
   "version": "2.0.1",
   "private": true,
   "homepage": "https://crm-workspace.netlify.app/",
-
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -13,7 +12,6 @@
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
-
   "dependencies": {
     "@ant-design/colors": "7.2.1",
     "@ant-design/icons": "6.1.0",
@@ -32,12 +30,14 @@
     "@mui/x-charts": "8.22.1",
     "@tabler/icons-react": "^3.36.1",
     "@vitejs/plugin-react": "5.1.2",
+    "apexcharts": "^5.10.4",
     "axios": "^1.13.6",
     "dayjs": "^1.11.19",
     "formik": "2.4.9",
     "framer-motion": "12.23.26",
     "lodash-es": "4.17.22",
     "react": "19.2.3",
+    "react-apexcharts": "^2.1.0",
     "react-device-detect": "2.2.3",
     "react-dom": "19.2.3",
     "react-number-format": "5.4.4",
@@ -51,7 +51,6 @@
     "yup": "1.7.1",
     "zustand": "^5.0.11"
   },
-
   "devDependencies": {
     "@eslint/compat": "2.0.0",
     "@eslint/eslintrc": "3.3.3",
