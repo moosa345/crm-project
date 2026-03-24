@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // material-ui
 import Avatar from '@mui/material/Avatar';
@@ -56,6 +56,30 @@ export default function DashboardDefault() {
   const [orderMenuAnchor, setOrderMenuAnchor] = useState(null);
   const [analyticsMenuAnchor, setAnalyticsMenuAnchor] = useState(null);
 
+  // rotating header text
+  const headerMessages = [
+    "Welcome back! Here's your business performance overview.",
+    'Track your sales, revenue, and customer growth in real time.',
+    'Monitor your team performance and daily business insights.',
+    'Stay updated with analytics and boost your CRM productivity.',
+    'Manage your leads, customers, and reports from one dashboard.',
+    'Your CRM performance at a glance - sales, revenue, and more.',
+    'Get insights into your business growth and customer engagement here.',
+    'Analyze your sales trends and optimize your CRM strategy.',
+    'Your business performance metrics, all in one place.',
+    'Track your revenue growth and customer acquisition easily.'
+  ];
+
+  const [currentHeaderText, setCurrentHeaderText] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeaderText((prev) => (prev + 1) % headerMessages.length);
+    }, 5000); 
+
+    return () => clearInterval(interval);
+  }, [headerMessages.length]);
+
   const handleOrderMenuClick = (event) => {
     setOrderMenuAnchor(event.currentTarget);
   };
@@ -76,11 +100,20 @@ export default function DashboardDefault() {
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* Header */}
       <Grid size={12}>
-        <Typography variant="h4" sx={{ mb: 0.5 }}>
+        <Typography variant="h4" sx={{ mb: 0.5, fontWeight: 700 }}>
           CRM Dashboard
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Welcome back! Here's your business performance overview.
+
+        <Typography
+          key={currentHeaderText}
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            minHeight: '24px',
+            transition: 'all 0.4s ease-in-out'
+          }}
+        >
+          {headerMessages[currentHeaderText]}
         </Typography>
       </Grid>
 
