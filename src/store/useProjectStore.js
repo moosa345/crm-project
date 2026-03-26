@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API = "http://localhost:5000/api/projects";
+const API = "https://crm-backend-2yi4.onrender.com/api/projects";
 
 export const useProjectStore = create((set) => ({
   projects: [],

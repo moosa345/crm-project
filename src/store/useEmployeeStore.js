@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API = "http://localhost:5000/api/employees";
+const API = "https://crm-backend-2yi4.onrender.com/api/employees";
 
 export const useEmployeeStore = create((set) => ({
   employees: [],
